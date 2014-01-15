@@ -63,7 +63,7 @@ class SimpleSearchBackend(BaseSearchBackend):
 		else:
 		    for term in query_string.split():
 			queries = []
-                        str_model = str(model)
+			str_model = str(model)
 			for field in model._meta.fields:
 			    if hasattr(field, 'related'):
 				continue
@@ -95,21 +95,21 @@ class SimpleSearchBackend(BaseSearchBackend):
 			if 'UserProfile' in str_model:
 			    from fnsite.models import Expertise
 			    expertises = Expertise.objects.filter(Q(**{'%s__icontains' % 'name': term}))
-                            es = [e.id for e in expertises]
-                            queries.append(Q(expertise__id__in = es))
-                        if 'Company' in str_model:
-                            from fnsite.models import Sector
+			    es = [e.id for e in expertises]
+			    queries.append(Q(expertise__id__in = es))
+			if 'Company' in str_model:
+			    from fnsite.models import Sector
 			    expertises = Sector.objects.filter(Q(**{'%s__icontains' % 'name': term}))
-                            es = [e.id for e in expertises]
-                            queries.append(Q(sectors__id__in = es))
-                        if 'FnDeal' in str_model or 'Function' in str_model:
-                            from fnsite.models import Tag
+			    es = [e.id for e in expertises]
+			    queries.append(Q(sectors__id__in = es))
+			if 'FnDeal' in str_model or 'Function' in str_model:
+			    from fnsite.models import Tag
 			    expertises = Tag.objects.filter(Q(**{'%s__icontains' % 'name': term}))
-                            es = [e.id for e in expertises]
-                            queries.append(Q(tags__id__in = es))
+			    es = [e.id for e in expertises]
+			    queries.append(Q(tags__id__in = es))
 
-                
-			qs = model.objects.filter(six.moves.reduce(lambda x, y: x|y, queries))
+
+			qs = model.objects.filter(six.moves.reduce(lambda x, y: x|y, queries)).distinct()
 
 			# aganzha
 			# print "eeeeeeeeeeeeeeeeeeeee"
