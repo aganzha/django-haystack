@@ -414,11 +414,10 @@ class WhooshSearchBackend(BaseSearchBackend):
                 'sortedby': sort_by,
                 'reverse': reverse,
             }
-
+            print "_________________________++++",page_num,page_length
             # Handle the case where the results have been narrowed.
             if narrowed_results is not None:
                 search_kwargs['filter'] = narrowed_results
-
             try:
                 raw_page = searcher.search_page(
                     parsed_query,
