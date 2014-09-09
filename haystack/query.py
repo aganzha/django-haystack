@@ -98,10 +98,10 @@ class SearchQuerySet(object):
         return self._result_count - self._ignored_result_count
 
     def __iter__(self):
+
         if self._cache_is_full():
             # We've got a fully populated cache. Let Python do the hard work.
             return iter(self._result_cache)
-
         return self._manual_iter()
 
     def __and__(self, other):

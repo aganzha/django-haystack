@@ -111,9 +111,6 @@ class SimpleSearchBackend(BaseSearchBackend):
 
 			qs = model.objects.filter(six.moves.reduce(lambda x, y: x|y, queries)).distinct()
 
-			# aganzha
-			# print "eeeeeeeeeeeeeeeeeeeee"
-			# print str(qs.query).replace(' ','\n')
 
 
 		hits += len(qs)
